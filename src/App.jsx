@@ -17,6 +17,7 @@ const App = () => {
   const { isBlurEnabled } = useBlur()
   const { isDarkModeActive } = useDarkMode()
   const { clearTokens } = useTokens()
+  
 
   useEffect(() => {
     isBlurEnabled ? document.documentElement.style.overflow = "hidden" : document.documentElement.style.overflow = "auto"

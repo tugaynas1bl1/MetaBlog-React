@@ -8,7 +8,7 @@ const AnimationDarkMode = () => {
     const { isDarkModeActive } = useDarkMode()
     return (
         <div>
-            <img className={`${isDarkModeActive ?  "-translate-x-700 translate-y-400 rotate-180" : "rotate-20 block"} -top-30 overflow-hidden -right-20 w-50 opacity-60 h-50 absolute transition-all duration-5000`} src={sun} alt="" />
+            <img className={`${isDarkModeActive ?  "-translate-x-700 translate-y-400 rotate-180" : "rotate-20 block"} -top-30 overflow-hidden -right-20 w-50 opacity-60 h-50 absolute transition-all duration-2000`} src={sun} alt="" />
             <img className={`${isDarkModeActive ?  "-translate-x-35 translate-y-35 rotate-45" : ""} -top-42 -right-42 w-30 h-30 opacity-50 absolute transition-all duration-4000`} src={moon} alt="" />
         </div>
     )
