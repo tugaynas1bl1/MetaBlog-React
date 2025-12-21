@@ -10,6 +10,7 @@ import api from '../utils/axios'
 import { formatDate } from '../stores/formattingDate'
 import Search from './Search'
 import { useBlur } from '../stores/blurStore'
+import { useCategory } from '../stores/categoryStore'
 
 
 const Header = ({activeMenu, state}) => {
@@ -23,6 +24,7 @@ const Header = ({activeMenu, state}) => {
     const [searchTerm, setSearchTerm] = useState("")
     const [searchedBlogs, setSearchedBlogs] = useState([])
     const { isBlurEnabled, enableBlur, disableBlur } = useBlur()
+    const { setCategory } = useCategory()
 
     const checkAccessToken = (page) => {
         if(accessToken) navigate(page)
@@ -100,7 +102,7 @@ const Header = ({activeMenu, state}) => {
                 
             
                 <div className={`${isDarkModeActive ? "text-white" : "text-[#3B3C4A]"} relative xl:text-[16px] lg:text-[14px] xl:ml-20 lg:-ml-15 text-[12px] mx-auto lg:flex hidden items-center justify-evenly w-[567px] h-6`}>
-                    <Link to="/" className={`${menu === "Home" ? isDarkModeActive ? "border-b-2 border-white" : "border-b-2 border-[#141624]" : ""} cursor-pointer pb-2 mt-2`} onMouseEnter={(e) => { menu==="Home" ? setMenuAnimation("") : setMenuAnimation("homeHovered") }} onMouseLeave={(e) => setMenuAnimation("")}>Home</Link>
+                    <Link onClick={(e) => {setCategory('')}} to="/" className={`${menu === "Home" ? isDarkModeActive ? "border-b-2 border-white" : "border-b-2 border-[#141624]" : ""} cursor-pointer pb-2 mt-2`} onMouseEnter={(e) => { menu==="Home" ? setMenuAnimation("") : setMenuAnimation("homeHovered") }} onMouseLeave={(e) => setMenuAnimation("")}>Home</Link>
                     <div className={`${menuAnimation === "homeHovered" ? "xl:w-[43px] lg:w-[37.5px]" : "w-0"} bg-[#4B6BFB] h-0.5 absolute top-[30px] xl:left-[63px] lg:left-[69.8px] transition-all duration-400`}></div>
                     
                     <button onClick={() => checkAccessToken("/write-blog")} className={`${menu === "Write a Blog" ? isDarkModeActive ? "border-b-2 border-white" : "border-b-2 border-[#141624]" : ""} cursor-pointer pb-2 mt-2`} onMouseEnter={(e) => { menu==="Write a Blog" ? setMenuAnimation("") : setMenuAnimation("writeBlogHovered") }} onMouseLeave={(e) => setMenuAnimation("")}>Write a Blog</button>

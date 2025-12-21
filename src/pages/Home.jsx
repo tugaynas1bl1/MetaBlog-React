@@ -8,17 +8,21 @@ import { formatDate } from '../stores/formattingDate'
 import { useLocation } from 'react-router-dom'
 import Search from '../components/Search'
 import { useBlur } from '../stores/blurStore'
+import { useCategory } from '../stores/categoryStore'
 
 const Home = ({isSearchEnabled}) => {
   const [blogs, setBlogs] = useState([])
   const [blogLimit, setBlogLimit] = useState(3)
   const [blogsLength, setBlogsLength] = useState(0)
   const { isBlurEnabled } = useBlur()
+  const location = useLocation()
+  const {category} = useCategory()
 
-  const getBlogs = async () => {
+  const getBlogs = async (cat) => {
+    console.log(category)
       try {
-          const { data, statusText } = await api.get(`blogs?limit=${blogLimit}`)
-          const { data: data2, statusText: statusText2 } = await api.get('blogs');
+          const { data, statusText } = await api.get(`${cat ? `blogs?category=${category}&limit=${blogLimit}` : `blogs?limit=${blogLimit}`}`)
+          const { data: data2, statusText: statusText2 } = await api.get(`${cat ? `blogs?category=${category}&limit` : `blogs?limit`}  `);
 
           
             setBlogsLength(data.blogs.length)
@@ -33,9 +37,7 @@ const Home = ({isSearchEnabled}) => {
             setBlogs(formattedBlogs)
             setBlogsLength(data2.blogs.length);
             console.log(blogs.length)
-          } 
-
-          
+          }          
 
       } catch (error) {
           console.error(error)
@@ -43,8 +45,8 @@ const Home = ({isSearchEnabled}) => {
   }
 
   useEffect(() => {
-    getBlogs()
-  }, [blogLimit])
+    getBlogs(category)
+  }, [category, blogLimit])
 
 
   return (

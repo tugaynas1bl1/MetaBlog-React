@@ -84,7 +84,7 @@ const Login = () => {
                         handleInput("password", e.target.value)
                     }}/>
                     <p className={`${isDarkModeActive ? "text-white" : "text-[#696A75]"} mb-[22px] md:text-[16px] text-[10px] md:ml-5 ml-1`}>You don't have an account? <Link to="/register" className='underline font-bold cursor-pointer'>Create Account</Link></p>
-                    <button onClick={handleLogin} to="/" className='bg-[#FFD050] md:text-[24px] text-center text-[14px] text-[#232536] font-bold md:py-5 py-3.5 md:h-fit h-[45px]'>Login</button>
+                    <button onClick={handleLogin} to="/" className='bg-[#FFD050] md:text-[24px] cursor-pointer hover:bg-[#ffbc04] hover:rounded-tl-[50px] hover:rounded-br-[50px] hover:rounded-tr-[50px] hover:rounded-bl-[50px] text-center text-[14px] text-[#232536] font-bold md:py-5 py-3.5 md:h-fit h-[45px] transition-all duration-500'>Login</button>
                 </div>
             </div>
             <Footer />

@@ -49,6 +49,7 @@ const WriteBlog = () => {
 
                 if (statusText === "OK"){
                     alert("Your blog created successfully")
+                    window.location.reload()
                 }
             } catch (error) {
                 console.error(error)
@@ -67,7 +68,7 @@ const WriteBlog = () => {
             <div className='lg:max-w-[1340px] flex flex-col max-w-[560px] w-full mx-auto lg:pl-5 gap-12 relative'>
                 <Header activeMenu="Write a Blog" />
                 <div className='flex flex-col justify-center items-center gap-[111px] mb-10'>
-                    <h1 className={`${isDarkModeActive ? "text-white" : "text-[#232536]"} text-[48px] font-bold`}>Write a new blog</h1>
+                    <h1 className={`${isDarkModeActive ? "text-white" : "text-[#232536]"} md:text-[48px] text-[32px] font-bold`}>Write a new blog</h1>
 
                     <div className='flex flex-col max-w-[769px] md:w-full h-fit'>
                         <input className={`${isDarkModeActive ? "placeholder-white text-white": "placeholder-[#232536] text-[#232536]"} border border-[#6D6E7680] rounded-xs outline-none mb-[33px] py-6 px-6 md:h-fit h-2.5`} placeholder='Add title for blog' type="text" onChange={(e) => {
@@ -85,7 +86,7 @@ const WriteBlog = () => {
                         <textarea className={`${isDarkModeActive ? "placeholder-white text-white": "placeholder-[#232536] text-[#232536]"} border border-[#6D6E7680] rounded-xs outline-none mb-[45px] py-6 px-6 md:h-fit h-2.5`} placeholder='Add blog body' type="text" onChange={(e) => {
                             handleDatas("description", e.target.value.trim())
                         }}/>
-                        <button onClick={handleSubmit} className='bg-[#FFD050] md:text-[24px] text-center text-[14px] text-[#232536] font-bold md:py-5 py-3.5 md:h-fit h-[45px]'>Submit</button>
+                        <button onClick={handleSubmit} className='bg-[#FFD050] md:text-[24px] cursor-pointer hover:bg-[#ffbc04] hover:rounded-tl-[50px] hover:rounded-br-[50px] hover:rounded-tr-[50px] hover:rounded-bl-[50px] text-center text-[14px] text-[#232536] font-bold md:py-5 py-3.5 md:h-fit h-[45px] transition-all duration-500'>Submit</button>
                     </div>
                 </div>
 

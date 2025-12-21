@@ -3,11 +3,15 @@ import logo from '../assets/Union.png'
 import { useDarkMode } from '../stores/darkModeStore'
 import logoWhite from '../assets/Union-white.png'
 import api from '../utils/axios'
+import { useNavigate } from 'react-router-dom'
+import { useCategory } from '../stores/categoryStore'
 
 const Footer = () => {
 
     const { isDarkModeActive } = useDarkMode()
     const [ categories, setCategories ] = useState()
+    const { category, setCategory } = useCategory()
+    const navigate = useNavigate()
 
     const getCategories = async () => {
         try {
@@ -51,14 +55,11 @@ const Footer = () => {
                         <div className="flex flex-col">
                             <h2 className={`${isDarkModeActive ? "text-white" : "text-[#181A2A]"} text-[18px] font-semibold mb-6`}>Category</h2>
                             <div className={`${isDarkModeActive ? "text-[#BABABF]" : "text-[#3B3C4A]"} flex flex-col gap-2`}>
-                                {categories?.map((c, i) => <button key={i} className='text-left cursor-pointer'>{c}</button>)}
+                                {categories?.map((c, i) => <button key={i} className='text-left cursor-pointer hover:scale-110 transition-all duration-100' onClick={(e) => {navigate('/'); setCategory(c);}}>{c}</button>)}
                             </div>
                         </div>
                     </div>
                 </div>
-
-
-
 
 
                 <div className="flex lg:flex-row flex-col lg:mx-0 lg:-ml-2 lg:gap-0 gap-10 mx-auto justify-between lg:px-[90px] pb-[47px]">
