@@ -14,7 +14,7 @@ const Home = ({isSearchEnabled}) => {
   const [blogs, setBlogs] = useState([])
   const [blogLimit, setBlogLimit] = useState(3)
   const [blogsLength, setBlogsLength] = useState(0)
-  const { isBlurEnabled } = useBlur()
+  const { isBlurEnabled, disableBlur } = useBlur()
   const location = useLocation()
   const {category} = useCategory()
 
@@ -51,7 +51,7 @@ const Home = ({isSearchEnabled}) => {
 
   return (
     <>
-    <div className={`${isBlurEnabled ? "" : "hidden"} w-full h-screen fixed top-30 z-5 backdrop-blur-xl`}></div>
+    
     <div className="lg:max-w-[1340px] flex flex-col max-w-[560px] w-full mx-auto lg:pl-5 gap-12 relative">
       <Header activeMenu="Home"/>
       <Thumbnail blog={blogs[0]}/>

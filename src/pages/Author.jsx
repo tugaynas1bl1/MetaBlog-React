@@ -45,7 +45,7 @@ const Author = () => {
     try {
       const { data, statusText } = await api.get(`blogs/user/me`)
 
-      if (data.blogs.length > 0) setIsThereBlogs(true)
+      if (data.length > 0) setIsThereBlogs(true)
 
       if (statusText === "OK") setAuthorBlogs(data)
     } catch (error) {
@@ -71,7 +71,6 @@ const Author = () => {
 
   return (
     <>
-        <div className={`${isBlurEnabled ? "" : "hidden"} w-full h-screen fixed top-30 z-5 backdrop-blur-xl`}></div>
         <div className="lg:max-w-[1340px] flex flex-col max-w-[560px] w-full lg:pl-5 gap-12 relative mx-auto">
             <Header activeMenu="My Blogs"/>
 

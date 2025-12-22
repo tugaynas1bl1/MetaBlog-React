@@ -3,6 +3,8 @@ import logo from '../assets/Union.png'
 import search from '../assets/search-outline.png'
 import sunny from '../assets/sunny.png'
 import logoWhite from '../assets/Union-white.png'
+import userWhite from '../assets/user-icon-white.png'
+import userDark from '../assets/user-icon-dark.png'
 import { useDarkMode } from '../stores/darkModeStore'
 import { Link, useNavigate } from 'react-router-dom'
 import { useTokens } from '../stores/tokenStore'
@@ -11,6 +13,7 @@ import { formatDate } from '../stores/formattingDate'
 import Search from './Search'
 import { useBlur } from '../stores/blurStore'
 import { useCategory } from '../stores/categoryStore'
+import { useSearch } from '../stores/searchStore'
 
 
 const Header = ({activeMenu, state}) => {
@@ -20,11 +23,13 @@ const Header = ({activeMenu, state}) => {
     const [open, setOpen] = useState(false);
     const [menu] = useState(activeMenu)
     const [menuAnimation, setMenuAnimation] = useState("")
-    const { accessToken } = useTokens()
+    const { accessToken, clearTokens } = useTokens()
     const [searchTerm, setSearchTerm] = useState("")
     const [searchedBlogs, setSearchedBlogs] = useState([])
     const { isBlurEnabled, enableBlur, disableBlur } = useBlur()
     const { setCategory } = useCategory()
+    const { searchReload, setSearchReload } = useSearch()
+    const [isUserPressed, setIsUserPressed] = useState(false)
 
     const checkAccessToken = (page) => {
         if(accessToken) navigate(page)
@@ -50,16 +55,23 @@ const Header = ({activeMenu, state}) => {
     }
 
     useEffect(() => {
+        if (!searchTerm.trim()) return;
         getSearchedBlogs()
     }, [searchTerm])
 
     useEffect(() => {
-        disableBlur()
-    }, [])
+        setSearchTerm("")
+        disableBlur();
+        setSearchReload(false)
+    }, [searchReload])
+
+    useEffect(() => {
+        if(!isBlurEnabled) setSearchTerm("")
+    }, [isBlurEnabled])
 
     return (
         <>
-            <div className="w-full h-[100px] flex lg:gap-[35px] md:gap-5 gap-[5px] py-[30px] px-6 lg:px-6 items-center z-10 justify-center">
+            <div className="w-full h-[100px] flex lg:gap-[35px] md:gap-5 gap-[5px] py-[30px] px-6 lg:px-6 items-center z-30 justify-center">
                 <div className="flex lg:gap-3 md:gap-2 gap-1 justify-center items-center">
                     <img className="md:w-9 md:h-9 w-4 h-4" src={isDarkModeActive ? logoWhite : logo} alt="" /> 
                     <p className={`${isDarkModeActive ? "text-white" : "text-[#141624]"} lg:text-[16px] md:text-[14px] text-[8px]`}>Meta <span className="font-medium">Blog</span></p>                    
@@ -73,28 +85,28 @@ const Header = ({activeMenu, state}) => {
                         setHamburgerOpened(!hamburgerOpened);
                     }}
                     className={`${
-                        hamburgerOpened ? "mt-18 bg-[#141624]" : "mt-0 bg-none"
+                        hamburgerOpened && searchTerm === "" ? "mt-18 bg-[#141624]" : "mt-0 bg-none"
                     } flex h-14 rounded-[10px] -ml-5 md:ml-0 lg:hidden cursor-pointer flex-col items-center px-2 pr-2 w-17 justify-center gap-[5px] relative transition-all duration-500`}
                 >
                     <span
                         className={`${
                             isDarkModeActive ? "bg-white" : "bg-[#141624]"
-                        } ${hamburgerOpened ? "bg-white" : "bg-[#141624]"} block h-0.5 md:w-[26px] w-[15px] rounded transform transition duration-500 ${
-                            open ? "rotate-45 md:translate-y-2 translate-y-2" : ""
+                        } ${hamburgerOpened && searchTerm === "" ? "bg-white" : "bg-[#141624]"} block h-0.5 md:w-[26px] w-[15px] rounded transform transition duration-500 ${
+                            open && searchTerm === "" ? "rotate-45 md:translate-y-2 translate-y-2" : ""
                         }`}
                     />
                     <span
                         className={`${
                             isDarkModeActive ? "bg-white" : "bg-[#141624]"
                         } block h-0.5 md:w-[26px] w-[15px] rounded transition duration-500 ${
-                            open ? "opacity-0" : ""
+                            open && searchTerm === "" ? "opacity-0" : ""
                         }`}
                     />
                     <span
                         className={`${
                             isDarkModeActive ? "bg-white" : "bg-[#141624]"
-                        } ${hamburgerOpened ? "bg-white" : "bg-[#141624]"} block h-0.5 md:w-[26px] w-[15px] rounded transform transition duration-500 ${
-                            open ? "-rotate-45 md:translate-y-0 -translate-y-2" : ""
+                        } ${hamburgerOpened && searchTerm === "" ? "bg-white" : "bg-[#141624]"} block h-0.5 md:w-[26px] w-[15px] rounded transform transition duration-500 ${
+                            open && searchTerm === "" ? "-rotate-45 md:translate-y-0 -translate-y-2" : ""
                         }`}
                     />
                 </button>
@@ -116,7 +128,7 @@ const Header = ({activeMenu, state}) => {
                 </div>
 
                 <div className='flex justify-center lg:ml-5 ml-[-30px] items-center w-[166px] h-9'>
-                    <input type="text" placeholder='Search' className={`${isDarkModeActive ? "bg-[#242535] text-white" : "bg-white text-[#242535]"} outline-none placeholder-[#A1A1AA] lg:h-10 rounded-[5px] h-[30px] xl:w-[200px] lg:w-[120px] xl:-ml-80 lg:-ml-50 w-20 lg:text-[16px] text-[12px] py-2 px-4 mr-3 trasition-all duration-500`} onChange={(e) => {
+                    <input value={searchTerm} type="text" placeholder='Search' className={`${isDarkModeActive ? "bg-[#242535] text-white" : "bg-white text-[#242535]"} outline-none placeholder-[#A1A1AA] lg:h-10 rounded-[5px] h-[30px] xl:w-[200px] lg:w-[120px] xl:-ml-80 lg:-ml-50 w-20 lg:text-[16px] text-[12px] py-2 px-4 mr-3 trasition-all duration-500`} onChange={(e) => {
                         setSearchTerm(e.target.value)
                         e.target.value.trim() === "" ? disableBlur() : enableBlur()
                     }}/>
@@ -131,12 +143,18 @@ const Header = ({activeMenu, state}) => {
                 </button>
 
                 <Link to='/signin' className={`${!accessToken ? "block" : "hidden"} ${isDarkModeActive ? "bg-white text-[#141624]" : "bg-[#141624] text-white"} rounded-[10px] px-2 md:w-auto w-12 py-2 text-regular md:px-3 cursor-pointer bg-[#141624] lg:text-[14px] md:text-[10px] md:ml-[-5px] text-[8px] xl:text-[16px] lg:ml-0 ml-5`}>Sign In</Link>
+                { accessToken ? <div className={`${isDarkModeActive ? "bg-white hover:bg-[#b8bbce]" : "bg-[#141624] hover:bg-[#283174]"} rounded-[50%] md:w-10 md:h-10 w-8 h-8 flex flex-col justify-center items-center relative cursor-pointer transition-all duration-300`} onClick={(e) => {setIsUserPressed(!isUserPressed)}} >
+                    <img className='md:w-6 md:h-6 w-5 h-5 cursor-pointer' src={isDarkModeActive ? userDark : userWhite} alt="" />
+                    { isUserPressed ? <div className={`${isDarkModeActive ? "bg-white text-[#141624] hover:bg-[#b8bbce]" : "bg-[#141624] text-white hover:bg-[#283174]"} xl:w-25 lg:w-20 md:w-20 md:h-10 w-17 h-7 lg:text-[16px] md:text-[14px] text-[12px] bg-[#141624] absolute md:top-12 top-9 flex flex-col justify-center items-center transition-all duration-300`}>
+                        <button className='cursor-pointer  w-full h-full' onClick={(e) => {clearTokens(); navigate('/'); window.location.reload()}}>Sign out</button>
+                    </div> : ""}
+                </div> : ""}
             </div>
 
-            <div className={` lg:hidden
+            <div className={`lg:hidden
                 w-full bg-[#141624] p-4 mx-auto overflow-hidden
                 transition-[max-height] duration-1000 mt-[-50px]
-                ${hamburgerOpened ? "max-h-[700px] opacity-100" : "max-h-0 opacity-0"}`}>
+                ${hamburgerOpened && searchTerm === '' ? "max-h-[700px] opacity-100" : "max-h-0 opacity-0"}`}>
                 <div className="lg:text-[16px] text-[20px] text-white mx-auto flex flex-col items-center justify-center w-full gap-5">
                     <Link to="/" className={`${menu === "Home" ? "bg-gray-700 shadow-xl shadow-black scale-102" : "bg-gray-500/20 scale-100"} cursor-pointer p-4 w-full text-center hover:bg-gray-500/40 hover:shadow-xl hover:scale-102 hover:shadow-black`}>Home</Link>
                     <button onClick={() => checkAccessToken("/write-blog")} className={`${menu === "Write a Blog" ? "bg-gray-700 shadow-xl shadow-black scale-102" : "bg-gray-500/20 scale-100"} cursor-pointer p-4 w-full text-center hover:bg-gray-500/40 hover:shadow-xl hover:scale-102 hover:shadow-black`}>Write a Blog</button>

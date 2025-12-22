@@ -64,7 +64,6 @@ const WriteBlog = () => {
 
     return (
         <>
-            <div className={`${isBlurEnabled ? "" : "hidden"} w-full h-screen fixed top-30 z-5 backdrop-blur-xl`}></div>
             <div className='lg:max-w-[1340px] flex flex-col max-w-[560px] w-full mx-auto lg:pl-5 gap-12 relative'>
                 <Header activeMenu="Write a Blog" />
                 <div className='flex flex-col justify-center items-center gap-[111px] mb-10'>
