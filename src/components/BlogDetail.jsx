@@ -37,7 +37,7 @@ const BlogDetail = () => {
                 <p className='text-[#696A75]'>{blogDetails.formattedDate}</p>
             </div>
             <img className="rounded-xl w-full h-fit object-cover" src={blogDetails.image} alt="Wrong IMG" />
-            <p className={`${isDarkModeActive ? " text-white" : "text-[#3B3C4A]"} lg:text-[20px] md:text-[16px] text-[14px] w-full`}>{blogDetails.description}</p>
+            <p className={`${isDarkModeActive ? " text-white" : "text-[#3B3C4A]"} whitespace-break-spaces lg:text-[20px] md:text-[16px] text-[14px] w-full`}>{blogDetails.description}</p>
         </div>
     )
 }
