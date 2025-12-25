@@ -21,7 +21,7 @@ const App = () => {
 
   useEffect(() => {
     isBlurEnabled ? document.documentElement.style.overflow = "hidden" : document.documentElement.style.overflow = "auto"
-  }, [isBlurEnabled])
+  }, [isBlurEnabled]) 
 
   return (
     <>
