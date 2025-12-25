@@ -54,6 +54,21 @@ const Header = ({activeMenu, state}) => {
         }
     }
 
+    const checkTimeOut = async () => {
+        try {
+        const { data, statusText } = await api.get(`blogs/user/me`)
+
+        if (statusText !== "OK")
+        {
+            clearTokens()
+            navigate('/')
+        }
+
+        } catch (error) {
+            console.error(error)
+        }
+    }
+
     useEffect(() => {
         if (!searchTerm.trim()) return;
         getSearchedBlogs()
@@ -68,6 +83,11 @@ const Header = ({activeMenu, state}) => {
     useEffect(() => {
         if(!isBlurEnabled) setSearchTerm("")
     }, [isBlurEnabled])
+
+    useEffect(() => {
+        checkTimeOut()
+    }, [])
+    
 
     return (
         <>
