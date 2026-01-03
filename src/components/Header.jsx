@@ -56,16 +56,16 @@ const Header = ({activeMenu, state}) => {
 
     const checkTimeOut = async () => {
         try {
-        const { data, statusText } = await api.get(`blogs/user/me`)
+            const { data, statusText } = await api.get(`blogs/user/me`)
 
-        if (statusText !== "OK")
-        {
-            clearTokens()
-            navigate('/')
-        }
+            if (statusText === "OK") true
 
         } catch (error) {
             console.error(error)
+            if (error.response?.statusText !== "OK") {
+                clearTokens()
+                navigate('/')
+            }
         }
     }
 
@@ -86,7 +86,7 @@ const Header = ({activeMenu, state}) => {
 
     useEffect(() => {
         checkTimeOut()
-    }, [])
+    }, [accessToken])
     
 
     return (

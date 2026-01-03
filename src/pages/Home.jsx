@@ -55,10 +55,10 @@ const Home = ({isSearchEnabled}) => {
     <div className="lg:max-w-[1340px] flex flex-col max-w-[560px] w-full mx-auto lg:pl-5 gap-12 relative">
       <Header activeMenu="Home"/>
       <Thumbnail blog={blogs[0]}/>
-      <div className="flex flex-col gap-8 lg:w-full md:w-100 w-80 lg:ml-4 mx-auto">
+      <div className="flex flex-col gap-8 lg:w-full md:w-170 w-80 lg:ml-4 md:-ml-10 mx-auto">
           <h1 className='md:text-[24px] text-[20px] font-bold text-white md:ml-0 pl-2'>Latest Post</h1>
-          <div className="flex flex-wrap gap-13 lg:justify-start justify-center">
-          {blogs.map(b => <Blogs key={b._id} blog={b}/>)}
+          <div className="flex flex-wrap md:gap-13 gap-7 mx-auto lg:justify-start justify-center">
+            {blogs.map(b => <Blogs key={b._id} blog={b}/>)}
           </div>
           <button onClick={() => {blogLimit >= blogsLength ? setBlogLimit(prev => prev = 3) : setBlogLimit(prev => prev + 6)}} className={` w-[123px] h-12 mx-auto text-[16px] font-medium text-[#696A75] rounded-md border border-[#696A754D] bg-none px-5 py-3 cursor-pointer hover:shadow-md hover:shadow-[#4B6BFB]/70`}>{blogLimit >= blogsLength ? "Show less" : "Load more"}</button>
       </div>

@@ -5,7 +5,7 @@ const Thumbnail = ({blog}) => {
   return (
     <>
       <Link to={`/blog-details/${blog?._id}`}>
-        <div className="w-full max-w-[1540px] lg:h-[490px] h-80 relative mx-auto px-4 cursor-pointer hover:scale-105 transition-all duration-550">
+        <div className="lg:w-full w-full max-w-[1540px] lg:h-[490px] md:w-180 lg:-ml-3 md:-ml-16 h-80 relative mx-auto px-4 cursor-pointer hover:scale-105 transition-all duration-550">
           <img className="w-full h-full object-cover rounded-xl" src={blog?.image} alt="" />
           <div className="absolute inset-4 bg-black/65 h-full top-0 rounded-xl hover:bg-black/75 transition-all duration-500"></div>
           <div className='absolute flex flex-col lg:top-[238px] top-[150px] left-10 gap-5'>
