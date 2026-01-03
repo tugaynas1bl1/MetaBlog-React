@@ -64,7 +64,6 @@ const Header = ({activeMenu, state}) => {
             console.error(error)
             if (error.response?.statusText !== "OK") {
                 clearTokens()
-                navigate('/')
             }
         }
     }
